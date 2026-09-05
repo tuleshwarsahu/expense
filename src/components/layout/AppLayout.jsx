@@ -38,6 +38,20 @@ export default function AppLayout({ children, title = 'Dashboard', onTransaction
         <main className="flex-1 p-3.5 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-5 sm:space-y-6">
           {children}
         </main>
+
+        <footer className="mt-auto py-6 px-4 text-center border-t border-slate-200/60 dark:border-slate-800/60 text-xs text-slate-500 dark:text-slate-400">
+          <p className="flex items-center justify-center gap-1.5 font-medium flex-wrap">
+            <span>Designed and Developed by</span>
+            <a
+              href="https://tuleshwar29.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 underline underline-offset-2 decoration-indigo-500/40 hover:decoration-indigo-500 transition-all"
+            >
+              Tuleshwar
+            </a>
+          </p>
+        </footer>
       </div>
 
       {/* Mobile Bottom Navigation */}

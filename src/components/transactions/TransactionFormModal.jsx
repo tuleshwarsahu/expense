@@ -3,8 +3,8 @@ import Modal from '../common/Modal';
 import { useCategories } from '../../hooks/useCategories';
 import { useTransactions } from '../../hooks/useTransactions';
 import { useAuth } from '../../context/AuthContext';
-import { CURRENCIES, ICON_MAP } from '../../lib/constants';
-import { Tag, Calendar, DollarSign, FileText } from 'lucide-react';
+import { CURRENCIES } from '../../lib/constants';
+import { Tag, Calendar, FileText } from 'lucide-react';
 
 export default function TransactionFormModal({
   isOpen,

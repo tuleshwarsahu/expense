@@ -9,8 +9,7 @@ import {
   PieChart,
   Tag,
   User,
-  LogOut,
-  Wallet
+  LogOut
 } from 'lucide-react';
 
 export default function Sidebar() {

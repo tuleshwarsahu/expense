@@ -3,7 +3,7 @@ import AppLayout from '../components/layout/AppLayout';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { CURRENCIES } from '../lib/constants';
-import { User, Mail, DollarSign, Target, Calendar, Save, LogOut, Sun, Moon, ShieldCheck } from 'lucide-react';
+import { User, Mail, DollarSign, Target, Save, LogOut, Sun, Moon } from 'lucide-react';
 import Toast from '../components/common/Toast';
 
 export default function Profile() {

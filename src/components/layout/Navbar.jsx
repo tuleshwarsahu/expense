@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
-import { Sun, Moon, Plus, User as UserIcon, Wallet } from 'lucide-react';
+import { Sun, Moon, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Navbar({ onOpenAddModal, title = 'Dashboard' }) {
