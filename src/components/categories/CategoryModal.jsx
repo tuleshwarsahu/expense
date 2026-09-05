@@ -51,7 +51,10 @@ export default function CategoryModal({ isOpen, onClose, onAddCategory }) {
         <div className="grid grid-cols-2 gap-2 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl">
           <button
             type="button"
-            onClick={() => setType('expense')}
+            onClick={() => {
+              setType('expense');
+              if (error) setError(null);
+            }}
             className={`py-2 rounded-lg text-sm font-semibold transition-all ${
               type === 'expense'
                 ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20'
@@ -62,7 +65,10 @@ export default function CategoryModal({ isOpen, onClose, onAddCategory }) {
           </button>
           <button
             type="button"
-            onClick={() => setType('income')}
+            onClick={() => {
+              setType('income');
+              if (error) setError(null);
+            }}
             className={`py-2 rounded-lg text-sm font-semibold transition-all ${
               type === 'income'
                 ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
@@ -82,7 +88,10 @@ export default function CategoryModal({ isOpen, onClose, onAddCategory }) {
             type="text"
             placeholder="e.g. Subscriptions, Side Hustle..."
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value);
+              if (error) setError(null);
+            }}
             className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-medium focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-colors"
           />
         </div>

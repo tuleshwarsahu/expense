@@ -1,7 +1,6 @@
 import React from 'react';
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
 import { formatCurrency } from '../../lib/utils';
-import { useTheme } from '../../context/ThemeContext';
 
 const COLORS = [
   '#f97316', '#10b981', '#ec4899', '#3b82f6',
@@ -10,16 +9,13 @@ const COLORS = [
 ];
 
 export default function CategoryPieChart({ categoryBreakdown = [], currency = 'INR', onSelectCategory }) {
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
-
   if (!categoryBreakdown || categoryBreakdown.length === 0) {
     return (
-      <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
         <h3 className="text-base font-bold text-slate-900 dark:text-white">
           Category Distribution
         </h3>
-        <div className="h-64 flex items-center justify-center text-slate-400 text-sm">
+        <div className="h-56 flex items-center justify-center text-slate-400 text-xs sm:text-sm">
           No category spending recorded yet
         </div>
       </div>
@@ -29,30 +25,29 @@ export default function CategoryPieChart({ categoryBreakdown = [], currency = 'I
   const totalExpense = categoryBreakdown.reduce((sum, item) => sum + item.value, 0);
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h3 className="text-base font-bold text-slate-900 dark:text-white">
-            Category Distribution
-          </h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
-            Current month expense breakdown
-          </p>
-        </div>
+    <div className="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between overflow-hidden h-full space-y-3">
+      {/* Card Header */}
+      <div>
+        <h3 className="text-base font-bold text-slate-900 dark:text-white">
+          Category Distribution
+        </h3>
+        <p className="text-xs text-slate-500 dark:text-slate-400">
+          Current period expense breakdown
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-        {/* Donut Chart */}
-        <div className="h-60 w-full relative">
+      <div className="flex flex-col items-center w-full flex-1 justify-center space-y-3">
+        {/* Donut Chart Container - 1:1 Aspect Ratio Square to Guarantee Perfect Circle */}
+        <div className="w-44 h-44 sm:w-48 sm:h-48 aspect-square relative flex items-center justify-center shrink-0 mx-auto">
           <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
+            <PieChart margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
               <Pie
                 data={categoryBreakdown}
                 cx="50%"
                 cy="50%"
-                innerRadius={60}
-                outerRadius={85}
-                paddingAngle={4}
+                innerRadius={52}
+                outerRadius={72}
+                paddingAngle={3}
                 dataKey="value"
               >
                 {categoryBreakdown.map((entry, index) => (
@@ -83,39 +78,39 @@ export default function CategoryPieChart({ categoryBreakdown = [], currency = 'I
             </PieChart>
           </ResponsiveContainer>
 
-          {/* Center text */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
-              Total
+          {/* Center text inside Donut */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
+            <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400">
+              TOTAL
             </span>
-            <span className="text-sm font-bold text-slate-900 dark:text-white">
+            <span className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white truncate max-w-[100px]">
               {formatCurrency(totalExpense, currency)}
             </span>
           </div>
         </div>
 
-        {/* Legend List */}
-        <div className="space-y-2 max-h-60 overflow-y-auto pr-2">
+        {/* Legend Breakdown List Below Donut */}
+        <div className="w-full space-y-1 max-h-40 overflow-y-auto pt-2 border-t border-slate-100 dark:border-slate-800">
           {categoryBreakdown.map((item, index) => (
             <div
               key={item.name}
               onClick={() => onSelectCategory && onSelectCategory(item.name)}
-              className="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition-colors"
+              className="flex items-center justify-between p-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 cursor-pointer transition-colors text-xs"
             >
-              <div className="flex items-center gap-2.5 min-w-0">
+              <div className="flex items-center gap-2 min-w-0">
                 <span
-                  className="w-3 h-3 rounded-full shrink-0"
+                  className="w-2.5 h-2.5 rounded-full shrink-0"
                   style={{ backgroundColor: COLORS[index % COLORS.length] }}
                 />
-                <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 truncate">
+                <span className="font-semibold text-slate-700 dark:text-slate-200 truncate">
                   {item.name}
                 </span>
               </div>
-              <div className="text-right shrink-0">
-                <span className="text-xs font-bold text-slate-900 dark:text-white block">
+              <div className="text-right shrink-0 flex items-center gap-2">
+                <span className="font-bold text-slate-900 dark:text-white">
                   {formatCurrency(item.value, currency)}
                 </span>
-                <span className="text-[10px] text-slate-400 font-medium">
+                <span className="text-[10px] text-slate-400 font-semibold w-7 text-right">
                   {item.percentage}%
                 </span>
               </div>

@@ -38,8 +38,13 @@ export default function YearlyReport() {
 
     transactions.forEach((tx) => {
       const amt = Number(tx.amount) || 0;
-      const d = new Date(tx.transaction_date);
-      const monthIdx = d.getMonth();
+      const dateParts = (tx.transaction_date || '').split('-');
+      let monthIdx = 0;
+      if (dateParts.length >= 2) {
+        monthIdx = Math.max(0, Math.min(11, parseInt(dateParts[1], 10) - 1));
+      } else {
+        monthIdx = new Date(tx.transaction_date).getMonth();
+      }
 
       if (tx.type === 'expense') {
         totalExpense += amt;
@@ -137,15 +142,15 @@ export default function YearlyReport() {
             </div>
           </div>
 
-          {/* Charts Row */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+          {/* Desktop Charts Row - Equal Heights */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 items-stretch">
             <div className="lg:col-span-2">
               <IncomeExpenseChart
                 data={yearlyData.monthlyList}
                 currency={userCurrency}
               />
             </div>
-            <div>
+            <div className="lg:col-span-1">
               <CategoryPieChart
                 categoryBreakdown={yearlyData.categoryBreakdown}
                 currency={userCurrency}

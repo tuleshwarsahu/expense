@@ -42,12 +42,12 @@ export default function Sidebar() {
       <div className="p-6 border-b border-slate-100 dark:border-slate-800/80 flex items-center gap-3">
         <img
           src="/logoE.png"
-          alt="SpendWise Logo"
+          alt="MyExpense Logo"
           className="w-10 h-10 rounded-xl object-cover shadow-md"
         />
         <div>
           <h2 className="font-bold text-xl text-slate-900 dark:text-white tracking-tight">
-            SpendWise
+            MyExpense
           </h2>
           <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
             Personal Finance

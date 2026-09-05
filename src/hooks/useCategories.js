@@ -52,9 +52,23 @@ export function useCategories() {
   const addCategory = async ({ name, type, icon }) => {
     if (!user) return;
     try {
+      const trimmedName = name.trim();
+      if (!trimmedName) {
+        throw new Error('Category name cannot be empty');
+      }
+
+      // Check if category already exists (case-insensitive) for the same type
+      const isDuplicate = categories.some(
+        (c) => c.type === type && c.name.trim().toLowerCase() === trimmedName.toLowerCase()
+      );
+
+      if (isDuplicate) {
+        throw new Error(`Category "${trimmedName}" already exists as an ${type} category.`);
+      }
+
       const newCat = {
         user_id: user.id,
-        name: name.trim(),
+        name: trimmedName,
         type,
         icon: icon || (type === 'expense' ? 'Tag' : 'DollarSign')
       };
@@ -65,7 +79,12 @@ export function useCategories() {
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        if (error.code === '23505') {
+          throw new Error(`Category "${trimmedName}" already exists.`);
+        }
+        throw error;
+      }
       setCategories((prev) => [...prev, data]);
       return data;
     } catch (err) {

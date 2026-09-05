@@ -17,7 +17,7 @@ export default function IncomeExpenseChart({ data = [], currency = 'INR' }) {
   const isDark = theme === 'dark';
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+    <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4 h-full flex flex-col justify-between">
       <div>
         <h3 className="text-base font-bold text-slate-900 dark:text-white">
           Income vs Expense
@@ -27,7 +27,7 @@ export default function IncomeExpenseChart({ data = [], currency = 'INR' }) {
         </p>
       </div>
 
-      <div className="h-64 sm:h-72 w-full pt-2">
+      <div className="h-64 sm:h-72 w-full pt-2 flex-1">
         {data.length === 0 ? (
           <div className="h-full flex items-center justify-center text-slate-400 text-sm">
             No income or expense data available
@@ -77,13 +77,13 @@ export default function IncomeExpenseChart({ data = [], currency = 'INR' }) {
               <Legend
                 wrapperStyle={{ paddingTop: 10, fontSize: 12 }}
                 formatter={(val) => (
-                  <span className="text-slate-700 dark:text-slate-300 font-medium">
+                  <span className="text-slate-700 dark:text-slate-300 font-semibold px-1">
                     {val}
                   </span>
                 )}
               />
-              <Bar dataKey="Income" fill="#10b981" radius={[6, 6, 0, 0]} />
-              <Bar dataKey="Expense" fill="#f43f5e" radius={[6, 6, 0, 0]} />
+              <Bar dataKey="Expense" name="Expense" fill="#f43f5e" radius={[4, 4, 0, 0]} maxBarSize={36} />
+              <Bar dataKey="Income" name="Income" fill="#10b981" radius={[4, 4, 0, 0]} maxBarSize={36} />
             </BarChart>
           </ResponsiveContainer>
         )}

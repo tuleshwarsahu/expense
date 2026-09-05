@@ -26,11 +26,11 @@ export default function Navbar({ onOpenAddModal, title = 'Dashboard' }) {
           <div className="md:hidden flex items-center gap-2">
             <img
               src="/logoE.png"
-              alt="SpendWise Logo"
+              alt="MyExpense Logo"
               className="w-8 h-8 rounded-lg object-cover shadow-sm"
             />
             <span className="font-bold text-lg bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
-              SpendWise
+              MyExpense
             </span>
           </div>
           <h1 className="hidden md:block text-xl font-bold text-slate-900 dark:text-white">
@@ -40,15 +40,14 @@ export default function Navbar({ onOpenAddModal, title = 'Dashboard' }) {
 
         {/* Action Controls */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Quick Add Button */}
+          {/* Quick Add Button (Desktop only) */}
           {onOpenAddModal && (
             <button
               onClick={onOpenAddModal}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-medium transition-all shadow-md shadow-indigo-600/20 active:scale-95"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium transition-all shadow-md shadow-indigo-600/20 active:scale-95"
             >
               <Plus className="w-4 h-4" />
-              <span className="hidden sm:inline">Add Record</span>
-              <span className="sm:hidden">Add</span>
+              <span>Add Record</span>
             </button>
           )}
 

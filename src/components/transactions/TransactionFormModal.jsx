@@ -183,6 +183,9 @@ export default function TransactionFormModal({
               onChange={(e) => setCategory(e.target.value)}
               className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-medium focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-colors appearance-none"
             >
+              {!availableCategories.some((cat) => cat.name === category) && category && (
+                <option value={category}>{category} (Archived/Deleted)</option>
+              )}
               {availableCategories.map((cat) => (
                 <option key={cat.id || cat.name} value={cat.name}>
                   {cat.name}

@@ -94,7 +94,7 @@ export const CURRENCIES = [
 export const DATE_PRESETS = [
   { label: 'All Time', value: 'all' },
   { label: 'This Week', value: 'week' },
-  { label: 'This Month', value: 'month' },
+  { label: 'Monthly View', value: 'month' },
   { label: 'This Year', value: 'year' },
-  { label: 'Custom', value: 'custom' }
+  { label: 'Custom Range', value: 'custom' }
 ];

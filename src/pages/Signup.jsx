@@ -73,7 +73,7 @@ export default function Signup() {
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-600/30 mb-2">
             <img
               src="/logoE.png"
-              alt="SpendWise Logo"
+              alt="MyExpense Logo"
               className="w-10 h-10 rounded-xl object-cover shadow-sm"
             />
           </div>

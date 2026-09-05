@@ -6,7 +6,7 @@ import TransactionFormModal from '../components/transactions/TransactionFormModa
 import { useTransactions } from '../hooks/useTransactions';
 import { useCategories } from '../hooks/useCategories';
 import { useAuth } from '../context/AuthContext';
-import { exportToCSV } from '../lib/utils';
+import { exportToPDF } from '../lib/utils';
 import { TableSkeleton } from '../components/common/Skeleton';
 import Toast from '../components/common/Toast';
 import { Plus } from 'lucide-react';
@@ -36,6 +36,7 @@ export default function Transactions() {
     deleteTransaction
   } = useTransactions(filters);
 
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
   const [toastMessage, setToastMessage] = useState(null);
 
@@ -51,7 +52,7 @@ export default function Transactions() {
   };
 
   const handleExport = () => {
-    exportToCSV(transactions, `transactions_${new Date().toISOString().split('T')[0]}.csv`);
+    exportToPDF(transactions, userCurrency, `transactions_${new Date().toISOString().split('T')[0]}.pdf`);
   };
 
   const handleEdit = (tx) => {
@@ -65,17 +66,25 @@ export default function Transactions() {
 
   return (
     <AppLayout title="Transaction History" onTransactionAdded={refetchTransactions}>
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {/* Header Actions */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center justify-between gap-4">
           <div>
             <h2 className="text-xl font-bold text-slate-900 dark:text-white">
               All Records
             </h2>
             <p className="text-xs text-slate-500 dark:text-slate-400">
-              Manage, filter, and export your expense and income records
+              Manage your expenses and income
             </p>
           </div>
+          {/* Add Record Button */}
+          <button
+            onClick={() => setIsAddModalOpen(true)}
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm transition-all shadow-md shadow-indigo-600/20 active:scale-95 shrink-0"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Add Record</span>
+          </button>
         </div>
 
         {/* Filter Controls */}
@@ -83,7 +92,7 @@ export default function Transactions() {
           filters={filters}
           onFilterChange={handleFilterChange}
           categories={categories}
-          onExportCSV={handleExport}
+          onExportPDF={handleExport}
         />
 
         {/* Transaction Table / Cards */}
@@ -95,10 +104,20 @@ export default function Transactions() {
             currency={userCurrency}
             onEdit={handleEdit}
             onDelete={handleDelete}
-            onOpenAddModal={() => {}}
+            onOpenAddModal={() => setIsAddModalOpen(true)}
           />
         )}
       </div>
+
+      {/* Add Modal */}
+      <TransactionFormModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onSuccess={(msg) => {
+          setToastMessage(msg || 'Transaction added successfully!');
+          refetchTransactions();
+        }}
+      />
 
       {/* Edit Modal */}
       {editingTransaction && (

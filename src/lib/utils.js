@@ -50,6 +50,8 @@ export function calculatePercentageChange(current, previous) {
   };
 }
 
+export { exportToPDF } from './pdfExport';
+
 /**
  * Exports JSON transactions array to CSV download file
  */

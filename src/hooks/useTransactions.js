@@ -45,10 +45,22 @@ export function useTransactions(filters = {}) {
           startDate = new Date(now);
           startDate.setDate(now.getDate() - distanceToMonday);
           startDate.setHours(0, 0, 0, 0);
+          query = query.gte('transaction_date', startDate.toISOString().split('T')[0]);
         } else if (filters.datePreset === 'month') {
-          startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+          if (filters.startDate && filters.endDate) {
+            query = query
+              .gte('transaction_date', filters.startDate)
+              .lte('transaction_date', filters.endDate);
+          } else {
+            startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+            const endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+            query = query
+              .gte('transaction_date', startDate.toISOString().split('T')[0])
+              .lte('transaction_date', endDate.toISOString().split('T')[0]);
+          }
         } else if (filters.datePreset === 'year') {
           startDate = new Date(now.getFullYear(), 0, 1);
+          query = query.gte('transaction_date', startDate.toISOString().split('T')[0]);
         } else if (filters.datePreset === 'custom') {
           if (filters.startDate) {
             query = query.gte('transaction_date', filters.startDate);
@@ -56,11 +68,6 @@ export function useTransactions(filters = {}) {
           if (filters.endDate) {
             query = query.lte('transaction_date', filters.endDate);
           }
-        }
-
-        if (startDate && filters.datePreset !== 'custom') {
-          const dateStr = startDate.toISOString().split('T')[0];
-          query = query.gte('transaction_date', dateStr);
         }
       }
 

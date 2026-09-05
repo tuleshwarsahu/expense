@@ -59,31 +59,31 @@ export default function Profile() {
   return (
     <AppLayout title="Profile & Preferences">
       <div className="max-w-3xl mx-auto space-y-6">
-        {/* Profile Card Header */}
-        <div className="bg-gradient-to-r from-indigo-600 to-violet-600 rounded-3xl p-6 text-white shadow-xl flex flex-col sm:flex-row items-center gap-5">
-          {profile?.avatar_url ? (
-            <img
-              src={profile.avatar_url}
-              alt="Avatar"
-              className="w-20 h-20 rounded-2xl object-cover border-2 border-white/40 shadow-md shrink-0"
-            />
-          ) : (
-            <div className="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-md border-2 border-white/40 flex items-center justify-center text-2xl font-bold shadow-md shrink-0">
-              {getInitials()}
-            </div>
-          )}
+        {/* Profile Card Header (30% Avatar / 70% Info Ratio) */}
+        <div className="bg-white dark:bg-slate-900 rounded-3xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm grid grid-cols-[30%_70%] items-center gap-3 sm:gap-6">
+          {/* Left Column (30%) */}
+          <div className="flex justify-center items-center">
+            {profile?.avatar_url ? (
+              <img
+                src={profile.avatar_url}
+                alt="Avatar"
+                className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-indigo-500/30 shadow-md"
+              />
+            ) : (
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-600 text-white flex items-center justify-center text-xl sm:text-2xl font-extrabold shadow-md">
+                {getInitials()}
+              </div>
+            )}
+          </div>
 
-          <div className="text-center sm:text-left space-y-1">
-            <h2 className="text-xl font-bold tracking-tight">
+          {/* Right Column (70%) */}
+          <div className="space-y-1 min-w-0">
+            <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight truncate">
               {profile?.full_name || 'Personal Account'}
             </h2>
-            <p className="text-xs text-indigo-100 font-medium">
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium truncate">
               {user?.email}
             </p>
-            <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/20 text-[11px] font-semibold mt-1">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Supabase RLS Protected</span>
-            </div>
           </div>
         </div>
 

@@ -2,7 +2,6 @@ import React from 'react';
 import AppLayout from '../components/layout/AppLayout';
 import SummaryCard from '../components/dashboard/SummaryCard';
 import BudgetProgress from '../components/dashboard/BudgetProgress';
-import QuickActions from '../components/dashboard/QuickActions';
 import RecentTransactions from '../components/dashboard/RecentTransactions';
 import SpendingTrendChart from '../components/charts/SpendingTrendChart';
 import CategoryPieChart from '../components/charts/CategoryPieChart';
@@ -33,8 +32,6 @@ export default function Dashboard() {
         </div>
       ) : (
         <div className="space-y-4 sm:space-y-6">
-          {/* Quick Actions */}
-          <QuickActions onOpenAddModal={() => {}} />
 
           {/* Top Summary Cards - 2 Columns on Mobile */}
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4">
